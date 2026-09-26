@@ -4,7 +4,7 @@ import { OFFER_END_DATE, PAGE_URL, WHATSAPP_NUMBER } from "../constants";
 import { OFFER_END_SHORT } from "../utils/formatDate";
 
 const DAILY_REMINDER_HOURS = [9, 18];
-const REMINDER_TITLE = "Abraham's ₦50k Website Offer - Closing Soon!";
+const REMINDER_TITLE = "Abraham's ₦100k Website Offer - Closing Soon!";
 const REMINDER_BODY = "Tap to reserve your slot before the ₦50,000 offer ends.";
 
 const formatReminderTime = (date) =>

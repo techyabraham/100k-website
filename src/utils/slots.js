@@ -53,5 +53,7 @@ export const decrementRemoteSlot = async () => {
   }
 };
 
-// TO RESET SLOT COUNT: open browser console and run:
-// localStorage.setItem('abraham_slots_remaining', '20'); location.reload();
+// TO RESET SLOT COUNTER FOR NEW ROUND:
+// Open browser console on the live site and run:
+// localStorage.setItem('abraham_slots_remaining', '10'); location.reload();
+// Run this once after deploying to start the new round at 10 slots.

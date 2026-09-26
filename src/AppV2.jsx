@@ -23,12 +23,12 @@ const revealUp = {
 };
 
 const faqs = [
-  ["Is ₦50,000 really the full price?", "Yes. For this window, it covers the complete website package listed here. No hidden setup charge is added."],
+  ["Is ₦100,000 really the full price?", "Yes. For this window, it covers the complete website package listed here. No hidden setup charge is added."],
   ["Will Abraham build it personally?", "Yes. Abraham reviews your business, plans your pages, and builds the website himself."],
   ["How long will my website take?", "After payment and content confirmation, Abraham will agree a practical timeline with you on WhatsApp."],
   ["Do I need to already have a domain?", "No. Domain and hosting are included in this package, with the final name confirmed after your slot is paid."],
-  ["Can I pay after the website is done?", "No. The slot is confirmed by payment because only 20 spaces are available."],
-  ["What happens after the offer closes?", "The offer closes and the standard website price returns to ₦350,000. The countdown is fixed and does not reset."],
+  ["Can I pay after the website is done?", "No. The slot is confirmed by payment because only 10 spaces are available."],
+  ["What happens after the offer closes?", "The offer closes and the next round will have a higher price. The countdown is fixed and does not reset."],
   ["How do I know my slot is actually reserved?", "Your form submission holds it for 30 minutes. Payment confirms it permanently. Abraham sends a WhatsApp message to confirm."],
   ["What if I'm outside Lagos?", "Abraham builds websites remotely. Location does not matter. He works with businesses across Nigeria."],
 ];
@@ -185,14 +185,27 @@ function UrgencyBar({ slotsRemaining, timeLeft }) {
     <motion.div initial={reduced ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: reduced ? 0 : 0.6 }} className="fixed left-0 top-0 z-[100] flex min-h-11 w-full items-center justify-center bg-[linear-gradient(90deg,#3D0066,#9333EA,#3D0066)] bg-[length:200%_200%] px-3 py-1.5 text-xs font-semibold text-white shadow-lg animate-shimmer sm:px-4 sm:text-sm">
       <div className="hidden flex-1 items-center gap-2 md:flex">
         <span className="h-2.5 w-2.5 rounded-full bg-red-500 animate-dot-pulse" />
-        <span>{slotsRemaining} of 20 slots remaining · {smartLabel}</span>
+        <span>{slotsRemaining} of 10 slots remaining · {smartLabel}</span>
       </div>
       <div className="flex flex-1 flex-wrap items-center justify-center gap-x-2 gap-y-0.5 text-center leading-tight">
-        <span>⚡ OFFER CLOSES:</span>
+        <span>⚡ NEW ROUND CLOSES IN:</span>
         <CountdownText timeLeft={timeLeft} />
         <span className="hidden text-white/70 sm:inline">· {OFFER_END_SHORT}</span>
       </div>
       <button onClick={scrollToForm} className="hidden flex-1 justify-end text-right text-orange-warm md:flex">→ Reserve Now</button>
+    </motion.div>
+  );
+}
+
+function MissedOfferBanner() {
+  return (
+    <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="relative mt-11 overflow-hidden border-b border-orange-fire/25 bg-[linear-gradient(135deg,#1A0030,#2D0052)] px-4 py-3.5 text-white">
+      <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(45deg,rgba(234,88,12,0.03)_0px,rgba(234,88,12,0.03)_1px,transparent_1px,transparent_8px)]" />
+      <div className="relative z-10 mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-3 gap-y-2 text-center">
+        <span className="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-red-500/40 bg-red-600/15 px-2.5 py-1 text-[10px] font-semibold uppercase text-red-200"><span className="h-1.5 w-1.5 rounded-full bg-red-600" />Offer closed</span>
+        <p className="m-0 text-[13px] leading-relaxed text-white/85">The <span className="font-semibold text-orange-300 line-through">₦50,000</span> offer is gone. Real people paid for it. The price is now <span className="font-bold text-orange-300">₦100,000</span> — <span className="italic text-white/60">still less than a third of what others charge.</span></p>
+        <span className="shrink-0 rounded-full border border-purple-400/35 bg-purple-500/20 px-3 py-1 text-[11px] font-semibold text-purple-200">✓ 20 businesses already got theirs</span>
+      </div>
     </motion.div>
   );
 }
@@ -203,7 +216,7 @@ function NavBar() {
   const navItems = [
     { label: "FAQs", target: "faq-section" },
     { label: "Reserve My Slot", target: "reservation-form", highlight: true },
-    { label: "50k Website Features", target: "offer-box" },
+    { label: "Website Offer", target: "offer-box" },
     { label: "Website Samples", target: "website-samples" },
   ];
 
@@ -220,7 +233,7 @@ function NavBar() {
   };
 
   return (
-    <nav className={`fixed left-0 right-0 top-[3.25rem] z-[90] border-b border-purple-bright/30 backdrop-blur-xl transition sm:top-11 ${scrolled ? "bg-purple-deep/95" : "bg-purple-deep/85"}`}>
+    <nav className={`fixed left-0 right-0 z-[90] border-b border-purple-bright/30 backdrop-blur-xl transition ${scrolled ? "top-11" : "top-[6rem]"} ${scrolled ? "bg-purple-deep/95" : "bg-purple-deep/85"}`}>
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
         <span className="text-base font-bold text-white tracking-[-0.01em]">Abraham<span className="text-orange-fire">.</span></span>
         <div className="desktop-nav flex items-center gap-2">
@@ -304,10 +317,10 @@ function HeroSection({ slotsRemaining, timeLeft }) {
       <div className="absolute inset-0 z-0 bg-cover bg-[center_top] bg-no-repeat" style={{ backgroundImage: "url('/images/header-bg.png')" }} />
       <div className="absolute inset-0 z-[1] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/images/header-layer.png')" }} />
       <div className="absolute inset-0 z-[1] bg-[linear-gradient(to_right,rgba(61,0,102,0.88)_0%,rgba(61,0,102,0.54)_55%,rgba(26,0,48,0.38)_100%)]" />
-      <div className="relative z-[2] mx-auto grid max-w-6xl gap-10 px-6 pb-20 pt-[132px] md:min-h-screen md:grid-cols-[55fr_45fr] md:items-center">
+      <div className="relative z-[2] mx-auto grid max-w-6xl gap-10 px-6 pb-20 pt-[152px] md:min-h-screen md:grid-cols-[55fr_45fr] md:items-center">
         <div className="hero-left-column">
           <motion.div {...item(0)} className="pre-badge inline-flex flex-wrap justify-center rounded-full bg-orange-fire px-4 py-2 text-xs font-bold uppercase tracking-[0.08em] text-white">
-            <span>⚠️ {smartLabel}</span><span className="mx-2 text-white/60">·</span><span>20 Slots</span><span className="mx-2 text-white/60">·</span><span>A Personal Offer from Abraham</span>
+            <span>⚠️ New Round</span><span className="mx-2 text-white/60">·</span><span>10 Slots Only</span><span className="mx-2 text-white/60">·</span><span>Closes October 10th</span>
           </motion.div>
           <motion.h1 {...item(0.15)} className="mt-6 max-w-3xl text-[clamp(3rem,5vw,3.5rem)] font-bold leading-[0.95] tracking-[-0.02em] text-white">
             I Want to <span className="italic text-orange-fire drop-shadow-[0_0_30px_rgba(234,88,12,0.6)]">Give</span><br />Your Business a Website.<br />
@@ -317,13 +330,17 @@ function HeroSection({ slotsRemaining, timeLeft }) {
             <span className="absolute -left-px -top-px h-4 w-4 rounded-tl-sm border-l-[3px] border-t-[3px] border-orange-fire" />
             <span className="absolute -bottom-px -right-px h-4 w-4 rounded-br-sm border-b-[3px] border-r-[3px] border-orange-fire" />
             <p className="m-0 max-w-[480px] text-[1.0625rem] leading-[1.75] text-light-text">
-              Until {OFFER_END_SHORT}, I'm opening 20 slots to build complete, professional websites for small businesses at ₦50,000. Not a discount. A genuine decision to help businesses that deserve a proper website but couldn't afford one.
+              The ₦50,000 round is closed. 20 businesses took it and got complete professional websites built personally by Abraham. This new round opens at ₦100,000 — still less than a third of what the market charges. 10 slots. Closes October 10th.
             </p>
           </motion.div>
-          <motion.div {...item(0.45)} className="mt-7 grid max-w-md grid-cols-2 gap-5">
-            <div><div className="text-xl font-medium text-light-text/45 line-through">₦350,000</div><div className="mt-1 text-xs uppercase tracking-[0.12em] text-light-text/80">Normal Market Price</div></div>
-            <div><div className="text-[clamp(2rem,5vw,3rem)] font-bold leading-none text-orange-fire drop-shadow-[0_0_20px_rgba(234,88,12,0.5)]">₦50,000</div><div className="mt-1 text-xs uppercase tracking-[0.12em] text-orange-warm">Your Price Today</div></div>
+          <motion.div {...item(0.45)} className="mt-7 flex flex-wrap items-end gap-4 sm:gap-5">
+            <div><div className="text-[10px] uppercase text-light-text/45">Others charge</div><div className="text-lg font-medium text-light-text/30 line-through">₦350,000</div></div>
+            <span className="pb-1 text-light-text/30">→</span>
+            <div><div className="text-[10px] uppercase text-red-200">Last round (closed)</div><div className="text-lg font-medium text-red-200/50 line-through">₦50,000</div></div>
+            <span className="pb-1 text-light-text/30">→</span>
+            <div><div className="text-[10px] uppercase text-orange-warm">This round</div><div className="text-5xl font-bold leading-none text-orange-fire drop-shadow-[0_0_30px_rgba(234,88,12,0.5)]">₦100k</div></div>
           </motion.div>
+          <p className="mt-3 text-sm font-semibold text-green-300">💰 You still save ₦250,000 vs market price · Closes October 10th</p>
           <motion.div {...item(0.6)} className="mt-8"><CtaButton expired={timeLeft.expired} /><p className="mt-3 text-sm text-light-text/80">Slots go in the order payment is received.</p><ReminderButton dark /></motion.div>
           <motion.div {...item(0.75)} className="trust-row mt-6 flex flex-wrap gap-x-3 gap-y-2 text-sm text-light-text">
             <span>✓ No hidden charges</span><span className="hidden text-light-text/50 sm:inline">·</span><span>✓ Built personally by Abraham</span><span className="hidden text-light-text/50 sm:inline">·</span><span>✓ 19 years experience</span>
@@ -350,10 +367,36 @@ function AbrahamLetter() {
           <blockquote className="mt-5 text-[clamp(1.1rem,4vw,2.2rem)] font-bold leading-tight text-purple-mid">"I have been building websites for 19 years. In that time, I have met hundreds of business owners who couldn't afford one."</blockquote>
           <div className="mt-7 space-y-5 text-[1.0625rem] leading-[1.75] text-dark-text">
             <p>I have watched brilliant people with real businesses stay invisible because a proper website felt too expensive. Small companies doing good work, but losing customers to people who simply looked more established online.</p>
-            <p>This offer is my decision to open 20 slots for business owners who are serious, ready, and tired of explaining their value without a place to send people. It is not a mass promotion. It is a short personal window.</p>
+            <p>This offer is my decision to open 10 slots for business owners who are serious, ready, and tired of explaining their value without a place to send people. It is not a mass promotion. It is a short personal window.</p>
             <p>If you have been waiting for the right time, I made this for you. I will build it with care, with nineteen years of experience, and with the understanding that your website is not decoration. It is credibility.</p>
           </div>
           <div className="mt-8"><div className="text-3xl font-bold text-purple-mid">- Abraham Akinwumi</div><div className="mt-1 text-sm text-dark-text/60">Software Developer · 19 Years · Lagos, Nigeria</div></div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function MissedOfferProof() {
+  const stats = [
+    ["20", "businesses got websites", "at the ₦50,000 price", "✅"],
+    ["₦0", "slots left at ₦50,000", "that offer is permanently gone", "🔒"],
+    ["10", "slots at ₦100,000", "this round — then price goes up again", "⚡"],
+  ];
+  return (
+    <section className="relative overflow-hidden bg-[#1A0030] px-6 py-12 text-white">
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[200px] w-[600px] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-[50%] bg-orange-fire/5 blur-3xl" />
+      <div className="relative z-10 mx-auto max-w-5xl">
+        <motion.div {...revealUp} className="mb-10 text-center">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-red-500/25 bg-red-600/10 px-4 py-1.5 text-[11px] font-semibold uppercase text-red-200">🔒 The ₦50,000 offer is permanently closed</span>
+          <h2 className="text-[clamp(1.4rem,3vw,2rem)] font-bold leading-snug">20 businesses moved fast.<br /><span className="text-orange-300">They got their websites at half this price.</span></h2>
+          <p className="mx-auto mt-3 max-w-[600px] text-[15px] leading-relaxed text-purple-100/70">The ₦50,000 price was real. It opened, it filled, and it closed. The businesses that acted now have professional websites working for them while their competitors are still waiting for the "right time."</p>
+        </motion.div>
+        <div className="mb-10 grid gap-4 md:grid-cols-3">
+          {stats.map(([number, label, sub, icon], i) => <motion.div key={label} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.12 }} className="rounded-xl border border-white/10 bg-white/[0.04] p-6 text-center"><div className="mb-2.5 text-2xl">{icon}</div><div className="mb-2 text-4xl font-bold leading-none text-orange-300">{number}</div><div className="text-sm font-semibold">{label}</div><div className="mt-1 text-xs text-white/45">{sub}</div></motion.div>)}
+        </div>
+        <motion.div {...revealUp} className="mx-auto max-w-[680px] rounded-xl border border-orange-fire/20 bg-[linear-gradient(135deg,rgba(234,88,12,0.1),rgba(147,51,234,0.1))] px-6 py-5 text-center">
+          <p className="m-0 text-[15px] leading-relaxed text-white/85">The people who said <span className="italic text-white/40">"I'll do it later"</span> during the ₦50,000 round are now paying ₦100,000.<br /><span className="font-semibold text-orange-300">The ones who wait through this round will pay even more.</span><br /><span className="text-[13px] text-white/55">Abraham's price increases every time a round closes. That is not a threat — it is just how this works.</span></p>
         </motion.div>
       </div>
     </section>
@@ -380,8 +423,8 @@ function OfferBox({ slotsRemaining, timeLeft }) {
   return (
     <motion.section {...revealUp} id="offer-box" className="bg-white px-5 py-20 scroll-mt-28">
       <div className="mx-auto grid max-w-3xl gap-8 rounded-3xl border-4 border-purple-mid bg-white p-6 shadow-[0_0_60px_rgba(147,51,234,0.28)] md:grid-cols-2 md:p-8">
-        <div><h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bold text-purple-mid">Your Complete Website - ₦50,000</h2><motion.ul initial="hidden" whileInView="show" viewport={{ once: true }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="mt-6 space-y-3 text-dark-text">{offerItems.map((item) => <motion.li key={item} variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }} className="flex gap-3"><span className="text-green-600">✓</span><span>{item}</span></motion.li>)}</motion.ul><p className="mt-6 text-sm text-dark-text/60">Every element chosen because it makes websites work, not just look good.</p><p className="mt-3 font-semibold text-orange-fire">This ₦50,000 price expires {OFFER_END_SHORT}.</p></div>
-        <div className="rounded-2xl bg-off-white p-5"><div className="space-y-4"><div className="flex justify-between gap-4 text-dark-text/60"><span>Others charge:</span><span className="line-through">₦350,000 - ₦500,000</span></div><div className="flex items-end justify-between gap-4"><span>Abraham charges:</span><span className="text-4xl font-bold text-orange-fire">₦50,000</span></div><div className="flex justify-between gap-4 font-bold text-green-700"><span>You save:</span><span>₦300,000</span></div></div><div className="mt-6 rounded-xl bg-white p-4"><div className="text-xl font-bold text-purple-mid">{slotsRemaining} of 20 slots left</div><div className="mt-2 text-sm text-dark-text/70">Closes in <CountdownText timeLeft={timeLeft} /></div></div><div className="mt-5"><CtaButton expired={timeLeft.expired} /></div>{/*<a className="mt-4 inline-flex font-semibold text-purple-bright" href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer">Or chat with Abraham first →</a>*/}</div>
+        <div><h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bold text-purple-mid">Your Complete Website - ₦100,000</h2><motion.ul initial="hidden" whileInView="show" viewport={{ once: true }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="mt-6 space-y-3 text-dark-text">{offerItems.map((item) => <motion.li key={item} variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }} className="flex gap-3"><span className="text-green-600">✓</span><span>{item}</span></motion.li>)}</motion.ul><p className="mt-6 text-sm text-dark-text/60">Every element chosen because it makes websites work, not just look good.</p><p className="mt-3 font-semibold text-orange-fire">Current round closes {OFFER_END_SHORT}.</p></div>
+        <div className="rounded-2xl bg-off-white p-5"><div className="space-y-4"><div className="flex justify-between gap-4 text-dark-text/60"><span>Market price:</span><span className="line-through">₦350,000 - ₦500,000</span></div><div className="flex justify-between gap-4 text-red-400"><span>Last round (closed):</span><span className="line-through">₦50,000</span></div><div className="flex items-end justify-between gap-4"><span>This round:</span><span className="text-4xl font-bold text-orange-fire">₦100,000</span></div><div className="flex justify-between gap-4 font-bold text-green-700"><span>You still save:</span><span>₦250,000</span></div></div><div className="mt-3 border-l-[3px] border-orange-fire bg-orange-fire/5 p-3"><p className="text-[13px] leading-relaxed text-dark-text/75"><strong className="text-purple-deep">Why ₦100,000 and not ₦50,000?</strong> The last round was Abraham being extraordinarily generous. This round is still Abraham being generous — ₦100,000 for a website the market charges ₦350,000 for. But the floor has moved. And it will move again when this round closes.</p></div><div className="mt-6 rounded-xl bg-white p-4"><div className="text-xl font-bold text-purple-mid">{slotsRemaining} of 10 slots left</div><div className="mt-2 text-sm text-dark-text/70">Closes in <CountdownText timeLeft={timeLeft} /></div></div><div className="mt-5"><CtaButton expired={timeLeft.expired} /></div>{/*<a className="mt-4 inline-flex font-semibold text-purple-bright" href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer">Or chat with Abraham first →</a>*/}</div>
       </div>
     </motion.section>
   );
@@ -389,7 +432,7 @@ function OfferBox({ slotsRemaining, timeLeft }) {
 
 function FOMOSection() {
   const cards = [["🔍", "Someone just searched for what you offer", "bg-purple-mid"], ["🏪", "They found your competitor's website", "bg-orange-fire"], ["💸", "They bought from them instead", "bg-dark-text"]];
-  return <motion.section {...revealUp} className="bg-orange-glow/35 px-5 py-20"><div className="mx-auto max-w-5xl text-center"><h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bold text-dark-text">Read This Before You Decide to Think About It</h2><p className="mx-auto mt-5 max-w-3xl text-[1.0625rem] leading-[1.75] text-dark-text">Someone is searching today for exactly what you sell. If your business is absent, another business becomes the answer.</p><motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={{ show: { transition: { staggerChildren: 0.15 } } }} className="mt-10 grid gap-4 md:grid-cols-3">{cards.map(([icon, text, color]) => <motion.div key={text} variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0 } }} className={`rounded-2xl ${color} p-6 text-white shadow-lg`}><div className="text-4xl">{icon}</div><div className="mt-4 text-lg font-semibold">{text}</div></motion.div>)}</motion.div><div className="mt-8 text-3xl font-bold italic text-purple-mid">You never knew. You never will.</div><div className="mt-6 text-3xl font-bold italic text-orange-fire">"You should have been there when it was open."</div></div></motion.section>;
+  return <motion.section {...revealUp} className="bg-orange-glow/35 px-5 py-20"><div className="mx-auto max-w-5xl text-center"><h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bold text-dark-text">Read This Before You Decide to Think About It</h2><p className="mx-auto mt-5 max-w-3xl text-[1.0625rem] leading-[1.75] text-dark-text">Someone who saw the ₦50,000 offer and waited is now reading this page paying double. That is not a coincidence — that is the pattern. Every round Abraham opens, the price is higher than the last. The ₦100,000 round is still the second cheapest this will ever be.</p><p className="mx-auto mt-3 max-w-3xl text-[1.0625rem] leading-[1.75] text-dark-text">Someone is searching today for exactly what you sell. If your business is absent, another business becomes the answer.</p><motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={{ show: { transition: { staggerChildren: 0.15 } } }} className="mt-10 grid gap-4 md:grid-cols-3">{cards.map(([icon, text, color]) => <motion.div key={text} variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0 } }} className={`rounded-2xl ${color} p-6 text-white shadow-lg`}><div className="text-4xl">{icon}</div><div className="mt-4 text-lg font-semibold">{text}</div></motion.div>)}</motion.div><div className="mt-8 text-3xl font-bold italic text-purple-mid">You never knew. You never will.</div><div className="mt-6 text-2xl font-bold italic text-orange-fire">"I was there for the ₦50,000 round. I wish I had moved then."</div></div></motion.section>;
 }
 
 function WhoIsThisFor() {
@@ -490,7 +533,7 @@ function TestimonialCard({ testimonial, index }) {
   );
 }
 function StatsBar() {
-  return <div className="mt-10 grid overflow-hidden rounded-2xl bg-purple-deep md:grid-cols-4"><StatsBarItem number={20} suffix="+" label="Slots Available" /><StatsBarItem number={19} suffix="" label="Years Experience" /><StatsBarItem number={300} suffix="K" prefix="₦" label="Amount You Save" /><StatsBarItem number={7} suffix="" label="September Deadline" /></div>;
+  return <div className="mt-10 grid overflow-hidden rounded-2xl bg-purple-deep md:grid-cols-4"><StatsBarItem number={10} suffix="" label="Slots Available" /><StatsBarItem number={19} suffix="" label="Years Experience" /><StatsBarItem number={250} suffix="K" prefix="₦" label="Amount You Save" /><StatsBarItem number={10} suffix="" label="October Deadline" /></div>;
 }
 
 function StatsBarItem({ number, suffix, prefix = "", label }) {
@@ -504,7 +547,7 @@ function FAQSection() {
 }
 
 function FinalCTA({ slotsRemaining, timeLeft }) {
-  return <motion.section {...revealUp} className="bg-[linear-gradient(135deg,#3D0066,#EA580C,#6B21A8)] bg-[length:200%_200%] px-5 py-20 text-center animate-shimmer"><div className="mx-auto max-w-3xl"><h2 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-tight text-white">Your Business Has Been<br />Waiting Long Enough.</h2><p className="mt-5 text-lg leading-relaxed text-light-text">The businesses that grow are not always the best ones. They are the ones that said yes when the window was open. The window closes {OFFER_END_SHORT}.</p><div className="mt-7 text-3xl font-bold text-orange-warm">🔴 {slotsRemaining} of 20 slots remaining</div><div className="mt-3 text-2xl font-bold"><CountdownText timeLeft={timeLeft} /></div><div className="mt-8"><CtaButton expired={timeLeft.expired} variant="white">→ Reserve My Slot. ₦50,000.</CtaButton><p className="mt-4 text-sm text-light-text">Fill the form below. Your slot is held for 30 minutes after submission. Payment locks it permanently.</p><ReminderButton dark /></div></div></motion.section>;
+  return <motion.section {...revealUp} className="bg-[linear-gradient(135deg,#3D0066,#EA580C,#6B21A8)] bg-[length:200%_200%] px-5 py-20 text-center animate-shimmer"><div className="mx-auto max-w-3xl"><h2 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-tight text-white">Your Business Has Been<br />Waiting Long Enough.</h2><p className="mt-5 text-lg leading-relaxed text-light-text">The ₦50,000 window closed. The ₦100,000 window closes {OFFER_END_SHORT}.</p><div className="mt-7 text-3xl font-bold text-orange-warm">🔴 {slotsRemaining} of 10 slots remaining</div><div className="mt-3 text-2xl font-bold"><CountdownText timeLeft={timeLeft} /></div><div className="mt-8"><CtaButton expired={timeLeft.expired} variant="white">→ Reserve My Slot. ₦100,000.</CtaButton><p className="mt-4 text-sm text-light-text">Fill the form below. Your slot is held for 30 minutes after submission. Payment locks it permanently.</p><ReminderButton dark /></div></div></motion.section>;
 }
 
 function FormField({ label, name, type = "text", placeholder, required, rows, value, onChange }) {
@@ -591,7 +634,7 @@ function ReservationForm({ expired, onSlotReserved }) {
 }
 
 function ExpiredOffer() {
-  return <div className="mx-auto max-w-2xl py-12 text-center"><h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bold text-purple-mid">This Offer Has Closed.</h2><p className="mt-4 text-[1.0625rem] leading-[1.75] text-dark-text">All 20 slots have been filled or the offer window has ended. Abraham is now building websites at his standard rate of ₦350,000.</p><a href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi Abraham, I want to ask about a standard website.`} target="_blank" rel="noreferrer" className="mt-6 inline-flex rounded-full bg-gradient-to-r from-orange-fire to-orange-warm px-7 py-4 text-base font-semibold uppercase tracking-[0.04em] text-white">→ Chat Abraham About a Standard Website</a></div>;
+  return <div className="mx-auto max-w-2xl py-12 text-center"><h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bold text-purple-mid">This Offer Has Closed.</h2><p className="mt-4 text-[1.0625rem] leading-[1.75] text-dark-text">All 10 slots have been filled or the offer window has ended. Abraham is now building websites at his standard rate of ₦350,000.</p><a href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi Abraham, I want to ask about a standard website.`} target="_blank" rel="noreferrer" className="mt-6 inline-flex rounded-full bg-gradient-to-r from-orange-fire to-orange-warm px-7 py-4 text-base font-semibold uppercase tracking-[0.04em] text-white">→ Chat Abraham About a Standard Website</a></div>;
 }
 
 function PostFormReassurance() {
@@ -614,7 +657,7 @@ function Footer() {
   return (
     <footer className="bg-dark-text px-5 py-10 text-center text-sm text-light-text/75">
       <div className="mx-auto max-w-3xl border-t border-purple-bright/15 px-6 py-6">
-        <p className="mb-2 text-sm text-light-text/60">Not looking for the ₦50,000 offer?</p>
+        <p className="mb-2 text-sm text-light-text/60">Looking for a custom project?</p>
         <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi Abraham! I'm interested in a custom website or app - not the ₦50k offer. Can we talk?`} target="_blank" rel="noreferrer" className="inline-flex border-b border-orange-warm/40 pb-0.5 font-semibold text-orange-warm">
           Click here if you want a custom website or app instead →
         </a>
@@ -622,7 +665,7 @@ function Footer() {
       <div>© Abraham Akinwumi | Website Developer | 19 Years Experience</div>
       <div className="mt-2">Built websites that have grown businesses across Nigeria.</div>
       <div className="mt-2">WhatsApp: +2348182126524 · Email: abraham@abraham.com.ng</div>
-      <div className="mx-auto mt-4 max-w-2xl text-xs text-light-text/45">Offer valid until {OFFER_END_COPY} only. This is a personal offer. 20 slots total. First paid, first served. After the timer ends, price returns to ₦350,000.</div>
+      <div className="mx-auto mt-4 max-w-2xl text-xs text-light-text/45">Current round: ₦100,000 · 10 slots · Closes October 10th, 2026.</div>
     </footer>
   );
 }
@@ -648,8 +691,10 @@ export default function LandingPage() {
   return (
     <main className="min-h-screen bg-off-white font-sans text-dark-text">
       <UrgencyBar {...shared} />
+      <MissedOfferBanner />
       <NavBar />
       <HeroSection {...shared} />
+      <MissedOfferProof />
       <AbrahamLetter />
       <TransformationSection />
       <OfferBox {...shared} />
@@ -666,5 +711,3 @@ export default function LandingPage() {
     </main>
   );
 }
-
-

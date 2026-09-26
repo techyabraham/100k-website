@@ -13,7 +13,7 @@ Manual payment shows Abraham's bank details directly on the payment page:
 Bank: UBA
 Account number: 2141500650
 Account name: Abraham Tobi Akomolafe
-Amount: NGN 50,000
+Amount: NGN 100,000
 ```
 
 After the customer transfers, they click `Send Receipt on WhatsApp`. The button opens WhatsApp with a pre-filled message containing their name, business name, amount, bank, and account number. Abraham can then confirm payment and send them the detailed website brief manually.
@@ -40,7 +40,7 @@ Card opens Paystack checkout with:
 channels: ["card"]
 ```
 
-The amount is `5000000` kobo, which equals `NGN 50,000`.
+The amount is `10000000` kobo, which equals `NGN 100,000`.
 
 After successful Paystack payment, the app redirects the customer to:
 

@@ -204,7 +204,7 @@ function MissedOfferBanner() {
       <div className="relative z-10 mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-3 gap-y-2 text-center">
         <span className="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-red-500/40 bg-red-600/15 px-2.5 py-1 text-[10px] font-semibold uppercase text-red-200"><span className="h-1.5 w-1.5 rounded-full bg-red-600" />Offer closed</span>
         <p className="m-0 text-[13px] leading-relaxed text-white/85">The <span className="font-semibold text-orange-300 line-through">₦50,000</span> offer is gone. Real people paid for it. The price is now <span className="font-bold text-orange-300">₦100,000</span> — <span className="italic text-white/60">still less than a third of what others charge.</span></p>
-        <span className="shrink-0 rounded-full border border-purple-400/35 bg-purple-500/20 px-3 py-1 text-[11px] font-semibold text-purple-200">✓ 20 businesses already got theirs</span>
+        <span className="shrink-0 rounded-full border border-purple-400/35 bg-purple-500/20 px-3 py-1 text-[11px] font-semibold text-purple-200">✓ 18 businesses already got theirs</span>
       </div>
     </motion.div>
   );
@@ -330,7 +330,7 @@ function HeroSection({ slotsRemaining, timeLeft }) {
             <span className="absolute -left-px -top-px h-4 w-4 rounded-tl-sm border-l-[3px] border-t-[3px] border-orange-fire" />
             <span className="absolute -bottom-px -right-px h-4 w-4 rounded-br-sm border-b-[3px] border-r-[3px] border-orange-fire" />
             <p className="m-0 max-w-[480px] text-[1.0625rem] leading-[1.75] text-light-text">
-              The ₦50,000 round is closed. 20 businesses took it and got complete professional websites built personally by Abraham. This new round opens at ₦100,000 — still less than a third of what the market charges. 10 slots. Closes October 10th.
+              The ₦50,000 round is closed. 18 businesses took it and got complete professional websites built personally by Abraham. This new round opens at ₦100,000 — still less than a third of what the market charges. 10 slots. Closes October 10th.
             </p>
           </motion.div>
           <motion.div {...item(0.45)} className="mt-7 flex flex-wrap items-end gap-4 sm:gap-5">
@@ -379,7 +379,7 @@ function AbrahamLetter() {
 
 function MissedOfferProof() {
   const stats = [
-    ["20", "businesses got websites", "at the ₦50,000 price", "✅"],
+    ["18", "businesses got websites", "at the ₦50,000 price", "✅"],
     ["₦0", "slots left at ₦50,000", "that offer is permanently gone", "🔒"],
     ["10", "slots at ₦100,000", "this round — then price goes up again", "⚡"],
   ];
@@ -389,7 +389,7 @@ function MissedOfferProof() {
       <div className="relative z-10 mx-auto max-w-5xl">
         <motion.div {...revealUp} className="mb-10 text-center">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-red-500/25 bg-red-600/10 px-4 py-1.5 text-[11px] font-semibold uppercase text-red-200">🔒 The ₦50,000 offer is permanently closed</span>
-          <h2 className="text-[clamp(1.4rem,3vw,2rem)] font-bold leading-snug">20 businesses moved fast.<br /><span className="text-orange-300">They got their websites at half this price.</span></h2>
+          <h2 className="text-[clamp(1.4rem,3vw,2rem)] font-bold leading-snug">18 businesses moved fast.<br /><span className="text-orange-300">They got their websites at half this price.</span></h2>
           <p className="mx-auto mt-3 max-w-[600px] text-[15px] leading-relaxed text-purple-100/70">The ₦50,000 price was real. It opened, it filled, and it closed. The businesses that acted now have professional websites working for them while their competitors are still waiting for the "right time."</p>
         </motion.div>
         <div className="mb-10 grid gap-4 md:grid-cols-3">

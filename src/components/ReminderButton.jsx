@@ -46,7 +46,7 @@ export default function ReminderButton({ dark = false, style = {} }) {
 
   const openWhatsAppFallback = () => {
     const message = encodeURIComponent(
-      `Hi Abraham, please send me daily reminders about your ₦50,000 website offer before it closes on ${OFFER_END_SHORT}. I don't want to miss it!`,
+      `Hi Abraham, please send me daily reminders about your ₦100,000 website offer before it closes on ${OFFER_END_SHORT}. I don't want to miss it!`,
     );
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
   };

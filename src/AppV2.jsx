@@ -10,7 +10,7 @@ import "swiper/css/pagination";
 import { FLUENT_FORMS_URL, INITIAL_SLOTS, OFFER_END_DATE, WHATSAPP_NUMBER } from "./constants";
 import { OFFER_END_COPY, OFFER_END_SHORT } from "./utils/formatDate";
 import { getSmartTimeLabel } from "./utils/getTimeLabel";
-import { decrementRemoteSlot, fetchSlotsRemaining, getSlotsRemaining } from "./utils/slots";
+import { decrementSlot, getSlotsRemaining } from "./utils/slots";
 import ReminderButton from "./components/ReminderButton";
 
 const easeOut = [0.22, 1, 0.36, 1];
@@ -604,6 +604,7 @@ function ReservationForm({ expired, onSlotReserved }) {
           email: formState.email.trim().toLowerCase(),
           whatsapp: formState.whatsapp.trim(),
           business_name: formState.businessName.trim(),
+          form_id: Number(FLUENT_FORM_ID),
           business_description: formState.businessDescription?.trim() || "",
           city: formState.city?.trim() || "",
           has_website: formState.hasWebsite || "",
@@ -675,18 +676,8 @@ export default function LandingPage() {
   const timeLeft = useCountdown(OFFER_END_DATE);
   const shared = useMemo(() => ({ slotsRemaining, timeLeft }), [slotsRemaining, timeLeft]);
   const handleSlotReserved = () => {
-    decrementRemoteSlot().then(setSlotsRemaining);
+    setSlotsRemaining(decrementSlot());
   };
-
-  useEffect(() => {
-    let active = true;
-    fetchSlotsRemaining().then((slots) => {
-      if (active) setSlotsRemaining(slots);
-    });
-    return () => {
-      active = false;
-    };
-  }, []);
 
   return (
     <main className="min-h-screen bg-off-white font-sans text-dark-text">

@@ -4,8 +4,11 @@ import { motion } from "framer-motion";
 import { MANUAL_BANK_DETAILS, PAYSTACK_PUBLIC_KEY, WHATSAPP_NUMBER } from "../constants";
 
 const PAYMENT_WINDOW_MINUTES = 30;
-const PAYMENT_AMOUNT_KOBO = 10000000;
+const PAYMENT_BASE_AMOUNT_KOBO = 10000000;
+const PAYSTACK_FEE_RATE = 0.015;
+const PAYMENT_AMOUNT_KOBO = Math.round(PAYMENT_BASE_AMOUNT_KOBO * (1 + PAYSTACK_FEE_RATE));
 const PAYMENT_AMOUNT_LABEL = "₦100,000";
+const PAYSTACK_AMOUNT_LABEL = "₦101,500";
 
 function readApplicant() {
   if (typeof sessionStorage === "undefined") return {};
@@ -72,11 +75,6 @@ export default function PaymentPage() {
   const receiptMessage = `Hi Abraham! I have made the manual bank transfer of ${PAYMENT_AMOUNT_LABEL} for my website slot.\n\nName: ${fullName}\nBusiness: ${business}\nBank paid to: ${MANUAL_BANK_DETAILS.bank}\nAccount number: ${MANUAL_BANK_DETAILS.accountNumber}\n\nI am sending my receipt/proof of payment now.`;
 
   const handlePaystackPayment = async (method) => {
-    if (expired) {
-      setPayStatus("Your payment hold has expired. Return to the landing page and reserve again.");
-      return;
-    }
-
     if (!PAYSTACK_PUBLIC_KEY) {
       setPayStatus("Paystack public key is missing. Add VITE_PAYSTACK_PUBLIC_KEY in .env.local and Vercel.");
       return;
@@ -182,7 +180,7 @@ export default function PaymentPage() {
 
           <div className="mt-8 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
             <ManualTransferCard receiptMessage={receiptMessage} />
-            <PaystackCard method={paystackMethod} onMethodChange={setPaystackMethod} onPay={handlePaystackPayment} payStatus={payStatus} expired={expired} />
+            <PaystackCard method={paystackMethod} onMethodChange={setPaystackMethod} onPay={handlePaystackPayment} payStatus={payStatus} />
           </div>
 
           <div className="mt-8 flex flex-col gap-3 rounded-2xl border border-purple-bright/15 bg-off-white p-5 sm:flex-row sm:items-center sm:justify-between">
@@ -232,7 +230,7 @@ function ManualTransferCard({ receiptMessage }) {
   );
 }
 
-function PaystackCard({ method, onMethodChange, onPay, payStatus, expired }) {
+function PaystackCard({ method, onMethodChange, onPay, payStatus }) {
   const options = [
     ["transfer", "Bank Transfer"],
     ["opay", "OPay"],
@@ -262,8 +260,9 @@ function PaystackCard({ method, onMethodChange, onPay, payStatus, expired }) {
       <div className="mt-5 rounded-2xl border border-purple-bright/15 bg-off-white p-5 text-center">
         <h3 className="text-xl font-bold text-purple-mid">{copy[0]}</h3>
         <p className="mx-auto mt-2 max-w-xl leading-relaxed text-dark-text/75">{copy[1]}</p>
-        <button onClick={() => onPay(method)} disabled={expired} className="mt-5 rounded-full bg-gradient-to-r from-orange-fire to-orange-warm px-8 py-4 font-semibold text-white shadow-[0_8px_24px_rgba(234,88,12,0.3)] disabled:cursor-not-allowed disabled:opacity-50">
-          Pay {PAYMENT_AMOUNT_LABEL} with Paystack
+        <p className="mt-3 text-sm font-semibold text-dark-text/70">Website: {PAYMENT_AMOUNT_LABEL} · Paystack fee (1.5%): ₦1,500</p>
+        <button onClick={() => onPay(method)} className="mt-5 rounded-full bg-gradient-to-r from-orange-fire to-orange-warm px-8 py-4 font-semibold text-white shadow-[0_8px_24px_rgba(234,88,12,0.3)]">
+          Pay {PAYSTACK_AMOUNT_LABEL} with Paystack
         </button>
       </div>
 

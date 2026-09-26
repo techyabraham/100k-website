@@ -44,6 +44,7 @@ add_action('rest_api_init', function () {
 function abraham_send_cors_headers() {
     $allowed_origins = [
         'https://50kwebsite.abraham.com.ng',
+        'https://100k.abraham.com.ng',
         'https://50kwebsite.vercel.app',
         'https://www.50kwebsite.vercel.app',
         'http://localhost:5173',
@@ -172,7 +173,8 @@ function abraham_handle_form_submission(WP_REST_Request $request) {
         ], 422);
     }
 
-    $form_id = 10;
+    $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+    $form_id = $origin === 'https://100k.abraham.com.ng' ? 13 : 10;
 
     if (!class_exists('\FluentForm\App\Services\Form\SubmissionHandlerService')) {
         return new WP_REST_Response([
@@ -223,7 +225,7 @@ function abraham_handle_form_submission(WP_REST_Request $request) {
             [
                 'form_id'      => $form_id,
                 'response'     => $entry_data,
-                'source_url'   => 'https://50kwebsite.vercel.app',
+                'source_url'   => $origin ?: 'https://50kwebsite.vercel.app',
                 'created_at'   => current_time('mysql'),
                 'updated_at'   => current_time('mysql'),
                 'status'       => 'unread',

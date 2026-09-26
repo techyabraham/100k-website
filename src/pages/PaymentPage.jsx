@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { MANUAL_BANK_DETAILS, PAYSTACK_PUBLIC_KEY, WHATSAPP_NUMBER } from "../constants";
 
 const PAYMENT_WINDOW_MINUTES = 30;
-const PAYMENT_AMOUNT_KOBO = 5000000;
-const PAYMENT_AMOUNT_LABEL = "₦50,000";
+const PAYMENT_AMOUNT_KOBO = 10000000;
+const PAYMENT_AMOUNT_LABEL = "₦100,000";
 
 function readApplicant() {
   if (typeof sessionStorage === "undefined") return {};

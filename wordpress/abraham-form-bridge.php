@@ -64,8 +64,20 @@ function abraham_send_cors_headers() {
     header('Access-Control-Max-Age: 86400');
 }
 
+function abraham_slots_option_name() {
+    $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+    return $origin === 'https://100k.abraham.com.ng'
+        ? 'abraham_slots_remaining_100k'
+        : 'abraham_slots_remaining';
+}
+
+function abraham_slots_default() {
+    $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+    return $origin === 'https://100k.abraham.com.ng' ? 10 : 20;
+}
+
 function abraham_get_slots_remaining() {
-    $slots = (int) get_option('abraham_slots_remaining', 20);
+    $slots = (int) get_option(abraham_slots_option_name(), abraham_slots_default());
     return max(0, $slots);
 }
 
@@ -94,7 +106,7 @@ function abraham_handle_slots_decrement(WP_REST_Request $request) {
     }
 
     $next = max(0, abraham_get_slots_remaining() - 1);
-    update_option('abraham_slots_remaining', $next, false);
+    update_option(abraham_slots_option_name(), $next, false);
 
     return abraham_slot_response();
 }
@@ -122,8 +134,8 @@ function abraham_handle_slots_reset(WP_REST_Request $request) {
     }
 
     $body = abraham_get_request_body($request);
-    $slots = isset($body['slots_remaining']) ? (int) $body['slots_remaining'] : 20;
-    update_option('abraham_slots_remaining', max(0, $slots), false);
+    $slots = isset($body['slots_remaining']) ? (int) $body['slots_remaining'] : abraham_slots_default();
+    update_option(abraham_slots_option_name(), max(0, $slots), false);
 
     return abraham_slot_response();
 }

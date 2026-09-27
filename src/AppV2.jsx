@@ -10,7 +10,7 @@ import "swiper/css/pagination";
 import { FLUENT_FORM_ID, FLUENT_FORMS_URL, INITIAL_SLOTS, OFFER_END_DATE, WHATSAPP_NUMBER } from "./constants";
 import { OFFER_END_COPY, OFFER_END_SHORT } from "./utils/formatDate";
 import { getSmartTimeLabel } from "./utils/getTimeLabel";
-import { decrementSlot, getSlotsRemaining } from "./utils/slots";
+import { decrementRemoteSlot, fetchSlotsRemaining, getSlotsRemaining } from "./utils/slots";
 import ReminderButton from "./components/ReminderButton";
 
 const easeOut = [0.22, 1, 0.36, 1];
@@ -233,7 +233,7 @@ function NavBar() {
   };
 
   return (
-    <nav className={`fixed left-0 right-0 z-[90] border-b border-purple-bright/30 backdrop-blur-xl transition ${scrolled ? "top-11" : "top-[6rem]"} ${scrolled ? "bg-purple-deep/95" : "bg-purple-deep/85"}`}>
+    <nav className={`relative z-[90] border-b border-purple-bright/30 backdrop-blur-xl transition md:fixed md:left-0 md:right-0 ${scrolled ? "md:top-11 bg-purple-deep/95" : "md:top-[6rem] bg-purple-deep/85"}`}>
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
         <span className="text-base font-bold text-white tracking-[-0.01em]">Abraham<span className="text-orange-fire">.</span></span>
         <div className="desktop-nav flex items-center gap-2">
@@ -676,8 +676,18 @@ export default function LandingPage() {
   const timeLeft = useCountdown(OFFER_END_DATE);
   const shared = useMemo(() => ({ slotsRemaining, timeLeft }), [slotsRemaining, timeLeft]);
   const handleSlotReserved = () => {
-    setSlotsRemaining(decrementSlot());
+    decrementRemoteSlot().then(setSlotsRemaining);
   };
+
+  useEffect(() => {
+    let active = true;
+    fetchSlotsRemaining().then((slots) => {
+      if (active) setSlotsRemaining(slots);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <main className="min-h-screen bg-off-white font-sans text-dark-text">

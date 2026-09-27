@@ -58,7 +58,9 @@ The countdown and date copy are generated from that value.
 
 ## Reset Slots Manually
 
-The React app now reads the shared slot count from WordPress:
+The React app reads the slot count from WordPress. The API selects a separate
+counter by request origin: `100k.abraham.com.ng` uses its own counter (default 10),
+while `50kwebsite.abraham.com.ng` keeps the legacy counter.
 
 ```text
 https://elements.abraham.com.ng/wp-json/abraham/v1/slots
@@ -76,14 +78,15 @@ To reset the slot count securely, add this to `wp-config.php` on the WordPress s
 define('ABRAHAM_SLOT_ADMIN_KEY', 'change-this-to-a-long-private-key');
 ```
 
-Then reset with PowerShell:
+Then reset the 100k counter with PowerShell. Keep the `Origin` header set to the
+new domain so this does not reset the legacy site's counter:
 
 ```powershell
 Invoke-WebRequest -UseBasicParsing -Method Post `
   -Uri "https://elements.abraham.com.ng/wp-json/abraham/v1/slots/reset" `
-  -Headers @{ "X-Abraham-Admin-Key" = "change-this-to-a-long-private-key" } `
+  -Headers @{ "X-Abraham-Admin-Key" = "change-this-to-a-long-private-key"; Origin = "https://100k.abraham.com.ng" } `
   -ContentType "application/json" `
-  -Body '{"slots_remaining":20}'
+  -Body '{"slots_remaining":10}'
 ```
 
 To reduce manually to any number, change the body:
@@ -97,7 +100,7 @@ To reduce manually to any number, change the body:
 If WordPress is unavailable, the page falls back to browser storage. To reset only your local browser preview:
 
 ```js
-localStorage.setItem('abraham_slots_remaining', '20');
+localStorage.setItem('abraham_slots_remaining', '10');
 location.reload();
 ```
 

@@ -25,7 +25,7 @@ const revealUp = {
 const faqs = [
   ["Is ₦100,000 really the full price?", "Yes. For this window, it covers the complete website package listed here. No hidden setup charge is added."],
   ["Will Abraham build it personally?", "Yes. Abraham reviews your business, plans your pages, and builds the website himself."],
-  ["How long will my website take?", "After payment and content confirmation, Abraham will agree a practical timeline with you on WhatsApp."],
+  ["When will my website be delivered?", "Delivery takes between 7 days and 1 month, depending on the slot you choose. Abraham will confirm your estimated delivery date after your slot is reserved."],
   ["Do I need to already have a domain?", "No. Domain and hosting are included in this package, with the final name confirmed after your slot is paid."],
   ["Can I pay after the website is done?", "No. The slot is confirmed by payment because only 10 spaces are available."],
   ["What happens after the offer closes?", "The offer closes and the next round will have a higher price. The countdown is fixed and does not reset."],
@@ -233,9 +233,9 @@ function NavBar() {
   };
 
   return (
-    <nav className={`relative z-[90] border-b border-purple-bright/30 backdrop-blur-xl transition md:fixed md:left-0 md:right-0 ${scrolled ? "md:top-11 bg-purple-deep/95" : "md:top-[6rem] bg-purple-deep/85"}`}>
+    <nav className={`sticky top-11 z-[90] border-b border-purple-bright/30 backdrop-blur-xl transition md:fixed md:left-0 md:right-0 ${scrolled ? "md:top-11 bg-purple-deep/95" : "md:top-[6rem] bg-purple-deep/85"}`}>
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
-        <span className="text-base font-bold text-white tracking-[-0.01em]">Abraham<span className="text-orange-fire">.</span></span>
+        <a href="#page-top" aria-label="100k Offer - back to top" className="text-base font-bold text-white">100k<span className="text-orange-fire"> Offer.</span></a>
         <div className="desktop-nav flex items-center gap-2">
           {navItems.map((item) => (
             <button
@@ -690,7 +690,7 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-off-white font-sans text-dark-text">
+    <main id="page-top" className="min-h-screen bg-off-white font-sans text-dark-text">
       <UrgencyBar {...shared} />
       <MissedOfferBanner />
       <NavBar />
